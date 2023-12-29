@@ -65,5 +65,11 @@ def grid_check(board, box_row_idx, box_col_idx, value):
                 return False
     return True
 
+def is_valid_move(board, box_row_idx, box_col_idx, value):
+    if row_check(board, box_row_idx, value) and col_check(board, box_col_idx, value) and grid_check(board, box_row_idx, box_col_idx, value):
+        return True
+    else:
+        return False
+
 def solve(board):
     pass
