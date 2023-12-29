@@ -31,18 +31,39 @@ def row_check(board, box_row_idx, value):
         
 def col_check(board, box_col_idx, value):
     for row in board:
-        print(row[box_col_idx])
         if row[box_col_idx] == value:
             return False
     return True
 
-def grid_check(board):
-    pass
+def grid_check(board, box_row_idx, box_col_idx, value):
+    # get location of the box: 
+    # 1) Left, middle or top column of the three
+    # 2) Upper, middle or Lower row of the three
+    
+    col_start, col_end = 0, 0
+    row_start, row_end = 0, 0
+    
+    # Task 1:
+    if box_col_idx % 3 == 0:
+        col_start, col_end = box_col_idx, box_col_idx + 2
+    elif (box_col_idx + 1) % 3 == 0:
+        col_start, col_end = box_col_idx - 2, box_col_idx
+    else:
+        col_start, col_end = box_col_idx - 1, box_col_idx + 1
+    
+    # Task 2:
+    if box_row_idx % 3 == 0:
+        row_start, row_end = box_row_idx, box_row_idx + 2
+    elif (box_row_idx + 1) % 3 == 0:
+        row_start, row_end = box_row_idx - 2, box_row_idx
+    else:
+        row_start, row_end = box_row_idx - 1, box_row_idx + 1
+        
+    for row in range(row_start, row_end + 1):
+        for col in range(col_start, col_end + 1):
+            if board[row][col] == value:
+                return False
+    return True
 
 def solve(board):
     pass
-
-# Run tests:
-# print_board(board)
-# print(row_check(board, 1, 8))
-# print(col_check(board, 8, 6))
