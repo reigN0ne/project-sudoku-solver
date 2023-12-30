@@ -71,5 +71,34 @@ def is_valid_move(board, box_row_idx, box_col_idx, value):
     else:
         return False
 
-def solve(board):
-    pass
+def solve(fixed_pos, visited, board, row_idx, col_idx, value):
+    if board[row_idx][col_idx] == 0:
+        for i in range(1, 10):
+            if is_valid_move(board, row_idx, col_idx, i):
+                board[row_idx][col_idx] = i
+                visited.add(
+                    (row_idx, col_idx)
+                )
+                
+                if col_idx == 8:
+                    row_idx += 1
+                    col_idx = 0
+                else:
+                    col_idx += 1
+                
+                return fixed_pos, visited, board, row_idx, col_idx, value
+        
+def main():
+    fixed_pos, visited = set(), set()
+    row_idx, col_idx, value = 0, 0, 1
+    
+    while True:
+        fixed_pos, visited, board, row_idx, col_idx, value = solve(fixed_pos, visited, board, row_idx, col_idx, value)
+        print_board(board)
+        
+        assert row_idx >= 0, "Board cannot be solved"
+        assert value > 0, "Board cannot be solved"
+        if row_idx == 9:
+            break
+        
+    print("Solved !")
